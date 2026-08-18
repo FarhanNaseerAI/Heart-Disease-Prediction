@@ -1,0 +1,4 @@
+# Animation assets
+
+Optional Lottie JSON or SVG sequences can be placed here.
+Core heartbeat / ECG / particle motion is implemented in CSS + canvas JS.

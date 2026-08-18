@@ -1,0 +1,446 @@
+{% extends "base.html" %}
+{% block title %}HeartVision AI — Professional Heart Disease Prediction{% endblock %}
+
+{% block content %}
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">Clinical Decision Support</p>
+      <h1 class="hero-brand">HeartVision <span>AI</span></h1>
+      <p class="hero-lead">
+        Professional AI-powered heart disease prediction — built for hospitals, clinics,
+        and healthcare teams who need clarity, speed, and explainable risk insight.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="#prediction">
+          <i class="fa-solid fa-stethoscope" aria-hidden="true"></i> Begin Assessment
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#about-ai">Explore the AI</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal" aria-hidden="true">
+      <div class="hero-stage">
+        <svg class="hero-heart" viewBox="0 0 200 180" width="220" height="198">
+          <defs>
+            <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e11d48"/>
+              <stop offset="100%" stop-color="#be123c"/>
+            </linearGradient>
+            <filter id="heartGlow">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path filter="url(#heartGlow)" fill="url(#heartGrad)"
+            d="M100 168 C40 120 16 84 16 54 A38 38 0 0 1 92 38 L100 48 L108 38 A38 38 0 0 1 184 54 C184 84 160 120 100 168 Z"/>
+        </svg>
+        <svg class="hero-ecg" viewBox="0 0 360 80" preserveAspectRatio="none">
+          <polyline class="ecg-path" fill="none" stroke="currentColor" stroke-width="2.5"
+            points="0,40 50,40 70,40 90,12 110,68 130,40 180,40 200,40 220,8 240,72 260,40 360,40"/>
+        </svg>
+        <div class="hero-orb"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats-strip" aria-label="Key statistics">
+  <div class="container stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-value" data-counter="82">0</div>
+      <div class="stat-suffix">%</div>
+      <p>Model Accuracy</p>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-value" data-counter="90">0</div>
+      <div class="stat-suffix">%</div>
+      <p>ROC-AUC Score</p>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-value" data-counter="13">0</div>
+      <div class="stat-suffix"></div>
+      <p>Clinical Features</p>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-value" data-counter="97">0</div>
+      <div class="stat-suffix">%</div>
+      <p>Disease Recall</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT AI ===================== -->
+<section class="section" id="about-ai">
+  <div class="container split">
+    <div class="reveal">
+      <p class="eyebrow">About the AI</p>
+      <h2>Transparent machine learning for cardiac risk</h2>
+      <p class="section-lead">
+        HeartVision AI uses a GridSearchCV-tuned Random Forest classifier trained on
+        validated clinical biomarkers. Predictions are explainable, fast, and designed
+        to assist — never replace — licensed clinicians.
+      </p>
+      <ul class="checklist">
+        <li>Trained &amp; validated with stratified train/test splits</li>
+        <li>Feature importance for clinical interpretability</li>
+        <li>Identical inference path to the research notebook</li>
+        <li>REST API ready for EHR / hospital integrations</li>
+      </ul>
+    </div>
+    <div class="glass-panel tech-card reveal">
+      <h3>Model Snapshot</h3>
+      <dl class="meta-list">
+        <div><dt>Algorithm</dt><dd>RandomForestClassifier</dd></div>
+        <div><dt>Tuning</dt><dd>GridSearchCV (5-fold CV)</dd></div>
+        <div><dt>Best Params</dt><dd>n_estimators=300 · max_depth=5</dd></div>
+        <div><dt>Accuracy</dt><dd>81.97%</dd></div>
+        <div><dt>ROC-AUC</dt><dd>0.902</dd></div>
+        <div><dt>Scaling</dt><dd>Not applied (tree ensemble)</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HEART DISEASE ===================== -->
+<section class="section section-alt" id="heart-disease">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">About Heart Disease</p>
+      <h2>Why early risk insight matters</h2>
+      <p class="section-lead">
+        Cardiovascular disease remains a leading cause of mortality worldwide.
+        Structured clinical signals — blood pressure, cholesterol, ECG patterns,
+        and stress-test markers — can surface elevated risk before acute events.
+      </p>
+    </div>
+    <div class="card-row">
+      <article class="info-block reveal">
+        <div class="icon-badge"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></div>
+        <h3>Ischemic Signals</h3>
+        <p>Exercise angina, ST depression, and ST slope changes can indicate reduced myocardial perfusion under stress.</p>
+      </article>
+      <article class="info-block reveal">
+        <div class="icon-badge"><i class="fa-solid fa-droplet" aria-hidden="true"></i></div>
+        <h3>Metabolic Drivers</h3>
+        <p>Elevated cholesterol and fasting glucose amplify atherosclerotic burden and long-term event risk.</p>
+      </article>
+      <article class="info-block reveal">
+        <div class="icon-badge"><i class="fa-solid fa-hospital" aria-hidden="true"></i></div>
+        <h3>Clinical Action</h3>
+        <p>Risk stratification supports timely referral, lifestyle intervention, and diagnostic workups.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Platform Capabilities</p>
+      <h2>Built for real clinical workflows</h2>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-item reveal"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i><h3>Medical-Grade UX</h3><p>Grouped clinical inputs, tooltips, and validation designed for care teams.</p></article>
+      <article class="feature-item reveal"><i class="fa-solid fa-brain" aria-hidden="true"></i><h3>Explainable AI</h3><p>Top influencing features and plain-language interpretation on every report.</p></article>
+      <article class="feature-item reveal"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i><h3>Risk Dashboard</h3><p>Probability, confidence, risk meter, and actionable recommendations.</p></article>
+      <article class="feature-item reveal"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i><h3>Export &amp; Print</h3><p>Copy, print, or export the medical report for documentation workflows.</p></article>
+      <article class="feature-item reveal"><i class="fa-solid fa-moon" aria-hidden="true"></i><h3>Light &amp; Dark</h3><p>Theme preference remembered locally with smooth transitions.</p></article>
+      <article class="feature-item reveal"><i class="fa-solid fa-server" aria-hidden="true"></i><h3>Production API</h3><p>Health checks and JSON prediction endpoints for system integration.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BENEFITS ===================== -->
+<section class="section section-alt" id="benefits">
+  <div class="container split">
+    <div class="reveal">
+      <p class="eyebrow">Benefits</p>
+      <h2>From telemetry to clinical narrative in seconds</h2>
+      <p class="section-lead">HeartVision AI transforms 13 clinical variables into a structured risk report with recommendations and disclaimers suitable for decision support.</p>
+    </div>
+    <ul class="benefit-list reveal">
+      <li><strong>Consistency</strong> — identical notebook inference every time</li>
+      <li><strong>Speed</strong> — model loaded once; sub-second predictions</li>
+      <li><strong>Clarity</strong> — risk tiers, probabilities, and patient summary</li>
+      <li><strong>Safety</strong> — strict validation and graceful error handling</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== TECHNOLOGY ===================== -->
+<section class="section" id="technology">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Technology</p>
+      <h2>Modern stack. Research fidelity.</h2>
+    </div>
+    <div class="tech-logos reveal">
+      <span>Python</span><span>Flask</span><span>scikit-learn</span><span>pandas</span>
+      <span>NumPy</span><span>joblib</span><span>Random Forest</span><span>GridSearchCV</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PREDICTION FORM ===================== -->
+<section class="section section-predict" id="prediction">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Clinical Prediction Console</p>
+      <h2>Patient assessment workspace</h2>
+      <p class="section-lead">Enter validated clinical parameters. All fields are required. Tooltips provide dataset encoding guidance.</p>
+    </div>
+
+    <div class="predict-toolbar reveal" role="group" aria-label="Quick fill profiles">
+      <span>Quick fill:</span>
+      <button type="button" class="chip preset-btn" data-preset="notebook">Notebook Sample</button>
+      <button type="button" class="chip preset-btn" data-preset="healthy">Lower Risk Profile</button>
+      <button type="button" class="chip preset-btn" data-preset="cardiac">Higher Risk Profile</button>
+      <button type="button" class="chip chip-ghost" id="reset-form-btn">Reset Form</button>
+    </div>
+
+    <form id="prediction-form" class="clinical-form glass-panel reveal" method="POST" action="{{ url_for('predict') }}" novalidate>
+      <!-- PATIENT INFORMATION -->
+      <fieldset class="form-section">
+        <legend><i class="fa-solid fa-user-injured" aria-hidden="true"></i> Patient Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="age">Age <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Age help" data-tip="{{ field_help.age.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.age.description }}</p>
+            <div class="field-row">
+              <input type="number" id="age" name="age" min="1" max="120" step="1" required
+                     placeholder="{{ field_help.age.placeholder }}" aria-describedby="age-error">
+              <input type="range" id="age-range" min="1" max="120" value="54" aria-label="Age slider">
+            </div>
+            <p class="field-error" id="age-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="sex">Gender <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Gender help" data-tip="{{ field_help.sex.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.sex.description }}</p>
+            <select id="sex" name="sex" required aria-describedby="sex-error">
+              <option value="" disabled selected>{{ field_help.sex.placeholder }}</option>
+              <option value="0">Female (0)</option>
+              <option value="1">Male (1)</option>
+            </select>
+            <p class="field-error" id="sex-error" role="alert"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- CLINICAL INFORMATION -->
+      <fieldset class="form-section">
+        <legend><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Clinical Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="trestbps">Blood Pressure (mmHg) <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Blood pressure help" data-tip="{{ field_help.trestbps.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.trestbps.description }}</p>
+            <div class="field-row">
+              <input type="number" id="trestbps" name="trestbps" min="80" max="250" step="1" required
+                     placeholder="{{ field_help.trestbps.placeholder }}" aria-describedby="trestbps-error">
+              <input type="range" id="trestbps-range" min="80" max="250" value="130" aria-label="Blood pressure slider">
+            </div>
+            <p class="field-error" id="trestbps-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="chol">Cholesterol (mg/dl) <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Cholesterol help" data-tip="{{ field_help.chol.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.chol.description }}</p>
+            <div class="field-row">
+              <input type="number" id="chol" name="chol" min="100" max="600" step="1" required
+                     placeholder="{{ field_help.chol.placeholder }}" aria-describedby="chol-error">
+              <input type="range" id="chol-range" min="100" max="600" value="240" aria-label="Cholesterol slider">
+            </div>
+            <p class="field-error" id="chol-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="thalach">Maximum Heart Rate (bpm) <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Heart rate help" data-tip="{{ field_help.thalach.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.thalach.description }}</p>
+            <div class="field-row">
+              <input type="number" id="thalach" name="thalach" min="60" max="220" step="1" required
+                     placeholder="{{ field_help.thalach.placeholder }}" aria-describedby="thalach-error">
+              <input type="range" id="thalach-range" min="60" max="220" value="150" aria-label="Heart rate slider">
+            </div>
+            <p class="field-error" id="thalach-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="oldpeak">Oldpeak (ST Depression) <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Oldpeak help" data-tip="{{ field_help.oldpeak.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.oldpeak.description }}</p>
+            <div class="field-row">
+              <input type="number" id="oldpeak" name="oldpeak" min="0" max="10" step="0.1" required
+                     placeholder="{{ field_help.oldpeak.placeholder }}" aria-describedby="oldpeak-error">
+              <input type="range" id="oldpeak-range" min="0" max="10" step="0.1" value="1.0" aria-label="Oldpeak slider">
+            </div>
+            <p class="field-error" id="oldpeak-error" role="alert"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- DIAGNOSTIC INFORMATION -->
+      <fieldset class="form-section">
+        <legend><i class="fa-solid fa-notes-medical" aria-hidden="true"></i> Diagnostic Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="cp">Chest Pain Type <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Chest pain help" data-tip="{{ field_help.cp.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.cp.description }}</p>
+            <select id="cp" name="cp" required aria-describedby="cp-error">
+              <option value="" disabled selected>{{ field_help.cp.placeholder }}</option>
+              <option value="0">0 — Typical Angina</option>
+              <option value="1">1 — Atypical Angina</option>
+              <option value="2">2 — Non-Anginal Pain</option>
+              <option value="3">3 — Asymptomatic</option>
+            </select>
+            <p class="field-error" id="cp-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="exang">Exercise Angina <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Exercise angina help" data-tip="{{ field_help.exang.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.exang.description }}</p>
+            <select id="exang" name="exang" required aria-describedby="exang-error">
+              <option value="" disabled selected>{{ field_help.exang.placeholder }}</option>
+              <option value="0">0 — No</option>
+              <option value="1">1 — Yes</option>
+            </select>
+            <p class="field-error" id="exang-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="slope">ST Slope <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Slope help" data-tip="{{ field_help.slope.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.slope.description }}</p>
+            <select id="slope" name="slope" required aria-describedby="slope-error">
+              <option value="" disabled selected>{{ field_help.slope.placeholder }}</option>
+              <option value="0">0 — Upsloping</option>
+              <option value="1">1 — Flat</option>
+              <option value="2">2 — Downsloping</option>
+            </select>
+            <p class="field-error" id="slope-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="thal">Thalassemia <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Thalassemia help" data-tip="{{ field_help.thal.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.thal.description }}</p>
+            <select id="thal" name="thal" required aria-describedby="thal-error">
+              <option value="" disabled selected>{{ field_help.thal.placeholder }}</option>
+              <option value="0">0 — Unknown / Not assessed</option>
+              <option value="1">1 — Fixed Defect</option>
+              <option value="2">2 — Normal</option>
+              <option value="3">3 — Reversible Defect</option>
+            </select>
+            <p class="field-error" id="thal-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="ca">Major Vessels (ca) <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Major vessels help" data-tip="{{ field_help.ca.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.ca.description }}</p>
+            <select id="ca" name="ca" required aria-describedby="ca-error">
+              <option value="" disabled selected>{{ field_help.ca.placeholder }}</option>
+              <option value="0">0 vessels</option>
+              <option value="1">1 vessel</option>
+              <option value="2">2 vessels</option>
+              <option value="3">3 vessels</option>
+              <option value="4">4 vessels</option>
+            </select>
+            <p class="field-error" id="ca-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="fbs">Fasting Blood Sugar <span class="req">*</span>
+              <button type="button" class="tip" aria-label="FBS help" data-tip="{{ field_help.fbs.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.fbs.description }}</p>
+            <select id="fbs" name="fbs" required aria-describedby="fbs-error">
+              <option value="" disabled selected>{{ field_help.fbs.placeholder }}</option>
+              <option value="0">0 — ≤ 120 mg/dl</option>
+              <option value="1">1 — > 120 mg/dl</option>
+            </select>
+            <p class="field-error" id="fbs-error" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="restecg">Resting ECG <span class="req">*</span>
+              <button type="button" class="tip" aria-label="Rest ECG help" data-tip="{{ field_help.restecg.tooltip }}">?</button>
+            </label>
+            <p class="field-desc">{{ field_help.restecg.description }}</p>
+            <select id="restecg" name="restecg" required aria-describedby="restecg-error">
+              <option value="" disabled selected>{{ field_help.restecg.placeholder }}</option>
+              <option value="0">0 — Normal</option>
+              <option value="1">1 — ST-T Wave Abnormality</option>
+              <option value="2">2 — Left Ventricular Hypertrophy</option>
+            </select>
+            <p class="field-error" id="restecg-error" role="alert"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-lg" id="predict-btn">
+          <i class="fa-solid fa-wave-square" aria-hidden="true"></i> Run AI Prediction
+        </button>
+        <p class="form-note">By submitting, you acknowledge this tool provides decision support only and is not a diagnosis.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section section-alt" id="faq">
+  <div class="container narrow">
+    <div class="section-head reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Is HeartVision AI a medical diagnosis?</summary>
+        <p>No. It is an assistive risk model. Licensed clinicians must interpret results in clinical context.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Which model powers predictions?</summary>
+        <p>A RandomForestClassifier tuned with GridSearchCV (n_estimators=300, max_depth=5), matching the research notebook.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Are inputs scaled before prediction?</summary>
+        <p>No. The Random Forest was trained on raw features. Inference uses the identical unscaled feature vector.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Can I integrate via API?</summary>
+        <p>Yes. Use <code>POST /api/predict</code> with JSON clinical fields and <code>GET /api/health</code> for readiness checks.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Is patient data stored permanently?</summary>
+        <p>Predictions are kept in the browser session for report viewing and optional history. No long-term database is configured by default.</p>
+      </details>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/prediction.js') }}"></script>
+{% endblock %}

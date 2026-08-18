@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Model Information — HeartVision AI{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container narrow">
+    <div class="section-head reveal">
+      <p class="eyebrow">Model Information</p>
+      <h1>How HeartVision AI was built</h1>
+      <p class="section-lead">
+        The production inference path is locked to <code>Disease_Prediction_Model.ipynb</code>.
+        No retraining, re-fitting, or feature reordering occurs at runtime.
+      </p>
+    </div>
+
+    <article class="glass-panel content-block reveal">
+      <h2>Dataset &amp; Features</h2>
+      <p>Clinical records from <code>heart.csv</code> with 13 predictors and binary target (<code>0</code> no disease, <code>1</code> disease).</p>
+      <ol class="feature-order">
+        <li>age</li><li>sex</li><li>cp</li><li>trestbps</li><li>chol</li>
+        <li>fbs</li><li>restecg</li><li>thalach</li><li>exang</li><li>oldpeak</li>
+        <li>slope</li><li>ca</li><li>thal</li>
+      </ol>
+    </article>
+
+    <article class="glass-panel content-block reveal">
+      <h2>Training Protocol</h2>
+      <ul class="checklist">
+        <li>Stratified train/test split (80/20, random_state=42)</li>
+        <li>StandardScaler fit for LR/SVM experiments only</li>
+        <li>Tree ensembles trained on raw features</li>
+        <li>Random Forest selected as best model, then GridSearchCV tuned</li>
+        <li>Best params: n_estimators=300, max_depth=5, min_samples_leaf=4, min_samples_split=2</li>
+      </ul>
+    </article>
+
+    <article class="glass-panel content-block reveal">
+      <h2>Held-out Performance</h2>
+      <div class="perf-table-wrap">
+        <table class="perf-table">
+          <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Accuracy</td><td>0.820</td></tr>
+            <tr><td>Precision</td><td>0.762</td></tr>
+            <tr><td>Recall</td><td>0.970</td></tr>
+            <tr><td>F1 Score</td><td>0.853</td></tr>
+            <tr><td>ROC-AUC</td><td>0.902</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="glass-panel content-block reveal">
+      <h2>Runtime Artifacts</h2>
+      <ul class="checklist">
+        <li><code>Disease_Prediction_Model.pkl</code> — RandomForestClassifier (loaded once)</li>
+        <li><code>scaler.pkl</code> — StandardScaler (loaded for artifact parity; not applied to RF)</li>
+      </ul>
+      <p>Sample notebook inference uses <code>final_model.predict(X.iloc[[0]])</code> without scaling. HeartVision AI reproduces that path.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}

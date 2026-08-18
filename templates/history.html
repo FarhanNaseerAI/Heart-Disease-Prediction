@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Prediction History — HeartVision AI{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="result-toolbar reveal">
+      <div>
+        <p class="eyebrow">Session History</p>
+        <h1>Recent predictions</h1>
+        <p class="muted">Stored in your secure server session for this browser visit (max 20).</p>
+      </div>
+      <div class="toolbar-actions">
+        {% if history %}
+        <form method="POST" action="{{ url_for('clear_history') }}">
+          <button type="submit" class="btn btn-ghost">Clear History</button>
+        </form>
+        {% endif %}
+        <a class="btn btn-primary" href="{{ url_for('index') }}#prediction">New Assessment</a>
+      </div>
+    </div>
+
+    {% if history %}
+    <div class="history-table-wrap glass-panel reveal">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Prediction</th>
+            <th>Risk Level</th>
+            <th>Disease Prob.</th>
+            <th>Confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in history %}
+          <tr>
+            <td>{{ item.timestamp }}</td>
+            <td>{{ item.prediction_text }}</td>
+            <td><span class="pill pill-{{ item.risk_level|lower }}">{{ item.risk_level }}</span></td>
+            <td>{{ item.risk_percentage }}%</td>
+            <td>{{ item.confidence }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state glass-panel reveal">
+      <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+      <h2>No predictions yet</h2>
+      <p>Run an assessment to populate session history.</p>
+      <a class="btn btn-primary" href="{{ url_for('index') }}#prediction">Start Assessment</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

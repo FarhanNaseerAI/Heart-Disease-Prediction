@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found — HeartVision AI{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container narrow empty-state reveal">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p>The resource you requested is unavailable.</p>
+    <a class="btn btn-primary" href="{{ url_for('index') }}">Return Home</a>
+  </div>
+</section>
+{% endblock %}

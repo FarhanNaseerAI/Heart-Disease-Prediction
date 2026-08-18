@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HeartVision AI — professional AI-powered heart disease prediction for clinical decision support.">
+  <meta name="theme-color" content="#0b6e99">
+  <title>{% block title %}HeartVision AI{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+  {% block head %}{% endblock %}
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('hv_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb ambient-orb--a"></div>
+    <div class="ambient-orb ambient-orb--b"></div>
+    <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{{ url_for('index') }}" aria-label="HeartVision AI home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="36" height="36" role="img">
+            <path class="brand-heart" d="M20 34s-12-7.5-12-16a7 7 0 0 1 12-4.8A7 7 0 0 1 32 18c0 8.5-12 16-12 16z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">HeartVision</span>
+          <span class="brand-ai">AI</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <a href="{{ url_for('index') }}#home">Home</a>
+        <a href="{{ url_for('index') }}#about-ai">About AI</a>
+        <a href="{{ url_for('index') }}#heart-disease">Heart Disease</a>
+        <a href="{{ url_for('index') }}#prediction">Prediction</a>
+        <a href="{{ url_for('about') }}">Model</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('index') }}#faq">FAQ</a>
+        <a href="{{ url_for('index') }}#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+          <i class="fa-solid fa-moon" id="theme-icon" aria-hidden="true"></i>
+        </button>
+        <a class="btn btn-primary btn-sm" href="{{ url_for('index') }}#prediction">Start Assessment</a>
+        <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack container" role="status" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand brand--footer">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="32" height="32"><path d="M20 34s-12-7.5-12-16a7 7 0 0 1 12-4.8A7 7 0 0 1 32 18c0 8.5-12 16-12 16z" fill="currentColor"/></svg>
+          </span>
+          <span class="brand-text"><span class="brand-name">HeartVision</span><span class="brand-ai">AI</span></span>
+        </div>
+        <p>Clinical-grade decision support for cardiovascular risk assessment. Built for hospitals, clinics, and healthcare innovators.</p>
+        <div class="social-links">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="mailto:hello@heartvision.ai" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <ul>
+          <li><a href="{{ url_for('index') }}#prediction">Prediction Console</a></li>
+          <li><a href="{{ url_for('about') }}">Model Information</a></li>
+          <li><a href="{{ url_for('history') }}">Prediction History</a></li>
+          <li><a href="{{ url_for('api_health') }}">API Health</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="{{ url_for('index') }}#about-ai">About the AI</a></li>
+          <li><a href="{{ url_for('index') }}#heart-disease">Heart Disease</a></li>
+          <li><a href="{{ url_for('index') }}#faq">FAQ</a></li>
+          <li><a href="{{ url_for('index') }}#features">Features</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Disclaimer</h3>
+        <p class="footer-disclaimer">HeartVision AI assists clinicians and does not replace professional medical diagnosis, treatment, or emergency care.</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 HeartVision AI. MIT License.</p>
+      <a class="github-btn" href="https://github.com" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> View on GitHub</a>
+    </div>
+  </footer>
+
+  <button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+  </button>
+
+  <!-- Fullscreen prediction loading experience -->
+  <div class="loading-overlay" id="loading-overlay" role="dialog" aria-modal="true" aria-labelledby="loading-title" hidden>
+    <div class="loading-panel">
+      <div class="loading-heart-wrap" aria-hidden="true">
+        <svg class="loading-heart" viewBox="0 0 100 90" width="96" height="86">
+          <path d="M50 82 C20 58 8 40 8 26 A18 18 0 0 1 44 18 L50 24 L56 18 A18 18 0 0 1 92 26 C92 40 80 58 50 82 Z"/>
+        </svg>
+        <div class="pulse-ring"></div>
+      </div>
+      <svg class="ecg-line" viewBox="0 0 400 60" aria-hidden="true">
+        <polyline class="ecg-path" points="0,30 40,30 55,30 70,10 85,50 100,30 140,30 155,30 170,5 185,55 200,30 260,30 275,30 290,12 305,48 320,30 400,30"/>
+      </svg>
+      <h2 id="loading-title">Analyzing Patient Data...</h2>
+      <p id="loading-step-text">Preparing clinical feature vector</p>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-bar-fill"></div>
+      </div>
+      <div class="loading-spinner" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}Medical Report — HeartVision AI{% endblock %}
+
+{% block content %}
+<section class="section result-hero" id="report">
+  <div class="container">
+    <div class="result-toolbar reveal">
+      <div>
+        <p class="eyebrow">AI Medical Report</p>
+        <h1>Cardiovascular Risk Assessment</h1>
+        <p class="muted">Generated {{ result.timestamp }} · Engine {{ result.model_name }}</p>
+      </div>
+      <div class="toolbar-actions">
+        <button type="button" class="btn btn-ghost" id="copy-report-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+        <button type="button" class="btn btn-ghost" id="print-report-btn"><i class="fa-solid fa-print"></i> Print</button>
+        <button type="button" class="btn btn-ghost" id="export-pdf-btn"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
+        <a class="btn btn-primary" href="{{ url_for('index') }}#prediction"><i class="fa-solid fa-rotate-left"></i> New Assessment</a>
+      </div>
+    </div>
+
+    <div class="report-grid" id="report-content">
+      <!-- Prediction + Gauge -->
+      <article class="glass-panel report-card prediction-card reveal">
+        <div class="badge" style="--badge: {{ result.risk_color }}">{{ result.risk_badge }}</div>
+        <div class="prediction-layout">
+          <div class="gauge-wrap">
+            <svg viewBox="0 0 200 200" width="180" height="180" aria-label="Risk percentage gauge">
+              <circle cx="100" cy="100" r="80" class="gauge-track"></circle>
+              <circle id="gauge-progress-circle" cx="100" cy="100" r="80" class="gauge-progress"
+                      data-percentage="{{ result.risk_percentage }}"
+                      style="stroke: {{ result.risk_color }}"></circle>
+              <text x="100" y="96" text-anchor="middle" class="gauge-value">{{ result.risk_percentage }}%</text>
+              <text x="100" y="118" text-anchor="middle" class="gauge-label">Disease Prob.</text>
+            </svg>
+          </div>
+          <div>
+            <h2 class="prediction-title {% if result.is_disease %}is-risk{% else %}is-ok{% endif %}">
+              {{ result.prediction_text }}
+            </h2>
+            <p class="prediction-sub">Class label: <strong>{{ result.prediction }}</strong>
+              (0 = no disease · 1 = disease)</p>
+            <div class="metric-row">
+              <div class="metric">
+                <span>Risk Level</span>
+                <strong style="color: {{ result.risk_color }}">{{ result.risk_level }}</strong>
+              </div>
+              <div class="metric">
+                <span>Confidence</span>
+                <strong>{{ result.confidence }}%</strong>
+              </div>
+              <div class="metric">
+                <span>P(Healthy)</span>
+                <strong>{{ '%.1f'|format(result.prob_healthy * 100) }}%</strong>
+              </div>
+              <div class="metric">
+                <span>P(Disease)</span>
+                <strong>{{ '%.1f'|format(result.prob_disease * 100) }}%</strong>
+              </div>
+            </div>
+            <div class="risk-meter" aria-hidden="true">
+              <div class="risk-meter-fill" style="width: {{ result.risk_percentage }}%; background: {{ result.risk_color }}"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Explainable AI -->
+      <article class="glass-panel report-card reveal">
+        <h3><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Explainable AI</h3>
+        <p>
+          {% if result.is_disease %}
+          The model estimated an elevated probability of heart disease based on the submitted clinical profile.
+          {% else %}
+          The model estimated a lower probability of heart disease based on the submitted clinical profile.
+          {% endif %}
+          This output is probabilistic decision support — not a standalone diagnosis.
+        </p>
+        <h4>Top influencing features</h4>
+        <ul class="importance-list">
+          {% for item in result.influencing_features %}
+          <li>
+            <div class="imp-head">
+              <span>{{ item.label }}</span>
+              <span>{{ item.importance }}%</span>
+            </div>
+            <div class="imp-bar"><span style="width: {{ item.importance }}%"></span></div>
+            <small>Submitted value: {{ item.value }}</small>
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="muted">Feature influence reflects global Random Forest importance from the trained model.</p>
+      </article>
+
+      <!-- Patient Summary -->
+      <article class="glass-panel report-card reveal span-2">
+        <h3><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i> Patient Summary</h3>
+        <div class="summary-grid">
+          <div>
+            <h4>Patient Profile</h4>
+            <ul class="kv-list">
+              <li><span><i class="fa-solid fa-cake-candles"></i> Age</span><strong>{{ result.inputs_human.age }}</strong></li>
+              <li><span><i class="fa-solid fa-venus-mars"></i> Gender</span><strong>{{ result.inputs_human.sex }}</strong></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Vital Signs</h4>
+            <ul class="kv-list">
+              <li><span><i class="fa-solid fa-gauge"></i> Blood Pressure</span><strong>{{ result.inputs_human.trestbps }}</strong></li>
+              <li><span><i class="fa-solid fa-heart"></i> Max Heart Rate</span><strong>{{ result.inputs_human.thalach }}</strong></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Clinical Measurements</h4>
+            <ul class="kv-list">
+              <li><span><i class="fa-solid fa-flask"></i> Cholesterol</span><strong>{{ result.inputs_human.chol }}</strong></li>
+              <li><span><i class="fa-solid fa-droplet"></i> Fasting Blood Sugar</span><strong>{{ result.inputs_human.fbs }}</strong></li>
+              <li><span><i class="fa-solid fa-chart-line"></i> Oldpeak</span><strong>{{ result.inputs_human.oldpeak }}</strong></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Diagnostic Information</h4>
+            <ul class="kv-list">
+              <li><span>Chest Pain</span><strong>{{ result.inputs_human.cp }}</strong></li>
+              <li><span>Exercise Angina</span><strong>{{ result.inputs_human.exang }}</strong></li>
+              <li><span>Rest ECG</span><strong>{{ result.inputs_human.restecg }}</strong></li>
+              <li><span>ST Slope</span><strong>{{ result.inputs_human.slope }}</strong></li>
+              <li><span>Major Vessels</span><strong>{{ result.inputs_human.ca }}</strong></li>
+              <li><span>Thalassemia</span><strong>{{ result.inputs_human.thal }}</strong></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Recommendations -->
+      <article class="glass-panel report-card reveal span-2">
+        <h3><i class="fa-solid fa-user-doctor" aria-hidden="true"></i> Recommendations</h3>
+        <div class="rec-grid">
+          {% if result.recommendations.alerts %}
+          <div class="rec-col rec-alert">
+            <h4>Clinical Alerts</h4>
+            <ul>{% for item in result.recommendations.alerts %}<li>{{ item }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+          <div class="rec-col">
+            <h4>Clinical</h4>
+            <ul>{% for item in result.recommendations.clinical %}<li>{{ item }}</li>{% else %}<li>No additional clinical flags beyond routine care.</li>{% endfor %}</ul>
+          </div>
+          <div class="rec-col">
+            <h4>Lifestyle</h4>
+            <ul>{% for item in result.recommendations.lifestyle %}<li>{{ item }}</li>{% endfor %}</ul>
+          </div>
+          <div class="rec-col">
+            <h4>Preventive</h4>
+            <ul>{% for item in result.recommendations.preventive %}<li>{{ item }}</li>{% endfor %}</ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Disclaimer -->
+      <aside class="glass-panel report-card disclaimer-card reveal span-2">
+        <h3><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Medical Disclaimer</h3>
+        <p>
+          HeartVision AI provides probabilistic estimates to assist healthcare professionals.
+          It does <strong>not</strong> replace clinical judgment, imaging, laboratory confirmation,
+          or emergency evaluation. Seek immediate medical care for chest pain, sudden dyspnea,
+          syncope, or other acute symptoms.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+{% endblock %}
